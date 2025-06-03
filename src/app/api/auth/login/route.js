@@ -57,9 +57,8 @@ export async function POST(req) {
     const response = NextResponse.json({ message: "Login sukses" });
 
     response.cookies.set("token", token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "strict",
+      // httpOnly: true,
+      // secure: process.env.NODE_ENV === "production",
       path: "/",
       maxAge: 7 * 24 * 60 * 60,
     });
