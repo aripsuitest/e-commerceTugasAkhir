@@ -289,10 +289,10 @@ export default function UserNavMenu({ user }) {
                   User Profile
                 </a>
                 <button
-                  className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
+                  className="block px-4 py-2 text-gray-700 hover:bg-gray-100 text-start w-full"
                   onClick={handleLogout}
                 >
-                  Logout
+                  log out
                 </button>
               </div>
             </div>
