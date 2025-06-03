@@ -119,7 +119,7 @@ export default function UserNavMenu({ user }) {
 
   const handleLogout = async () => {
     const res = await fetch("/api/auth/logout", {
-      method: "POST",
+      method: "DELETE",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
       credentials: "include",
