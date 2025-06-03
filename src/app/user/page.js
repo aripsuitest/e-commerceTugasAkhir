@@ -184,7 +184,7 @@ export default function UserDashboard() {
         senderType: 'client'
       });
 
-      // Update client's conversation list (mark as unread)
+      
       const clientConvRef = ref(db, `clientConversations/${userIDS[0]}/${userIDS[1]}`);
       await set(clientConvRef, {
         conversationId: selectedConversation,
