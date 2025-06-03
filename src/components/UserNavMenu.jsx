@@ -118,25 +118,43 @@ export default function UserNavMenu({ user }) {
   };
 
   const handleLogout = async () => {
-    const res = await fetch("/api/auth/logout", {
-      method: "DELETE",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
-      credentials: "include",
+    Swal.fire({
+      title: "Logging out...",
+      text: "Please wait...",
+      allowOutsideClick: false,
+      allowEscapeKey: false,
+      didOpen: () => {
+        Swal.showLoading();
+      },
     });
 
-    if (res.status === "ok") {
-      Swal.fire({
-        title: "Processing...",
-        text: "Please wait while we complete your request.",
-        allowOutsideClick: false,
-        allowEscapeKey: false,
-        didOpen: () => {
-          Swal.showLoading();
-        },
+    try {
+      const res = await fetch("/api/auth/logout", {
+        method: "DELETE",
+        credentials: "include",
       });
 
-      window.location.href("/home");
+      const result = await res.json();
+
+      if (res.ok && result.status === "ok") {
+        Swal.fire({
+          icon: "success",
+          title: "Logged out",
+          text: result.message,
+          timer: 1500,
+          showConfirmButton: false,
+        }).then(() => {
+          window.location.href = "/auth/login";
+        });
+      } else {
+        throw new Error("Logout gagal");
+      }
+    } catch (err) {
+      Swal.fire({
+        icon: "error",
+        title: "Logout Gagal",
+        text: err.message || "Terjadi kesalahan",
+      });
     }
   };
 
@@ -270,13 +288,12 @@ export default function UserNavMenu({ user }) {
                 >
                   User Profile
                 </a>
-                <a
+                <button
                   className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
-                  href="#"
                   onClick={handleLogout}
                 >
                   Logout
-                </a>
+                </button>
               </div>
             </div>
           )}

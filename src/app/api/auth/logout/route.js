@@ -1,9 +1,21 @@
-import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 
 export async function DELETE() {
-  const cookieStore = await cookies();
-  cookieStore.delete("token");
-  cookieStore.delete("user");
-  return NextResponse.json({ status: "ok", message: "anda berhasil logout!!" });
+  const response = NextResponse.json({
+    status: "ok",
+    message: "Logout berhasil",
+  });
+
+  // Hapus cookie dengan mencocokkan properti aslinya
+  response.cookies.set("token", "", {
+    path: "/",
+    expires: new Date(0),
+  });
+
+  response.cookies.set("user", "", {
+    path: "/",
+    expires: new Date(0),
+  });
+
+  return response;
 }
